@@ -1,7 +1,6 @@
 🚀 InsightStream: AI-Powered Research Discovery
 InsightStream is a high-performance research companion that bridges the gap between massive academic databases and actionable insights. It combines a real-time discovery feed with a Retrieval-Augmented Generation (RAG) chatbot, allowing you to "interact" with your curated library of academic papers.
 
-Live Demo | Report Bug
 
 ✨ Key Features
 🔍 Real-Time Discovery: Integrates the Semantic Scholar API to fetch the latest academic innovations across all fields.
