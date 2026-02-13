@@ -12,6 +12,7 @@ import { Toaster } from 'react-hot-toast';
 function App() {
   const { session, loading } = useAuth();
 
+  // 🔄 Loading screen
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
@@ -28,6 +29,7 @@ function App() {
   return (
     <Router>
       <div className="App selection:bg-blue-500/30">
+        
         <Toaster 
           position="top-center"
           toastOptions={{
@@ -35,23 +37,37 @@ function App() {
             duration: 4000,
           }}
         />
-        
-        {!session ? (
-          <Login />
-        ) : (
-          <Routes>
-            <Route path="/" element={<Dashboard />}>
-              {/* index route redirects "/" to "/feed" automatically */}
-              <Route index element={<Navigate to="/feed" replace />} />
-              <Route path="feed" element={<LiveFeedView />} /> 
-              <Route path="archive" element={<ArchiveVault />} />
-              <Route path="techtalk" element={<TechTalk />} />
-              <Route path="status" element={<SystemStatus />} />
-            </Route>
-            {/* Catch-all to redirect any weird URLs back to home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        )}
+
+        <Routes>
+
+          {/* 🔓 Public Routes */}
+          {!session && (
+            <>
+              <Route path="/" element={<Login />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </>
+          )}
+
+          {/* 🔐 Protected Routes */}
+          {session && (
+            <>
+              <Route path="/" element={<Dashboard />}>
+                
+                {/* Default redirect → /feed */}
+                <Route index element={<Navigate to="feed" replace />} />
+
+                <Route path="feed" element={<LiveFeedView />} />
+                <Route path="archive" element={<ArchiveVault />} />
+                <Route path="techtalk" element={<TechTalk />} />
+                <Route path="status" element={<SystemStatus />} />
+              </Route>
+
+              {/* Catch invalid routes */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </>
+          )}
+
+        </Routes>
       </div>
     </Router>
   );
